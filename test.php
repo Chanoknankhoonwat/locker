@@ -7,7 +7,8 @@ $connectionInfo = array( "Database"=>"officecenter", "UID"=>"sa", "PWD"=>"EuroIn
 $conn = sqlsrv_connect( $serverName, $connectionInfo);
 
 if( $conn ) {
-    $sql = "SELECT * FROM [dbo].[buddy_number]"; // แทนที่ table_name ด้วยชื่อของ table ที่ต้องการเรียก
+    $sql = "SELECT * FROM buddy_locker ";
+    $sql .= "WHERE status_buddy IS NOT NULL AND status_buddy = 1 "; // แทนที่ table_name ด้วยชื่อของ table ที่ต้องการเรียก
     $stmt = sqlsrv_query($conn, $sql);
 
     if ($stmt !== false) {

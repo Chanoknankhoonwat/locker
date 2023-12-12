@@ -4,27 +4,17 @@ $serverName = "DESKTOP-8T9L9T4\\SQLEXPRESS"; //serverName\instanceName
 // The connection will be attempted using Windows Authentication.
 $connectionInfo = array( "Database"=>"officecenter", "UID"=>"sa", "PWD"=>"EuroInturn");
 $conn = sqlsrv_connect( $serverName, $connectionInfo);
-//$selection = $_POST['selection']
-//$selectionID = $_POST['selectionID']
-//$employeeID = $_POST["employeeID"]
+
+$employeeId = $_POST['employee_id'];
 
 if( $conn ) {
-    $sql = "SELECT locker_employee.*,buddy_locker.buddy_number AS buddy_locker,department.departmentname AS department,locker_shirt.locker_number  
-        FROM locker_employee
-        JOIN buddy_locker ON locker_employee.idcard = buddy_locker.owner_buddy
-        JOIN department ON locker_employee.departmentid = department.departmentno
-        JOIN locker_shirt ON lockeremployee.idcard = locker_shirt.locker_number";
-    
-    if(true){ 
-        $stmt = sqlsrv_query($conn, $sql);
-    }
-    
-    elseif ($selection === "id"){
-        $sql .= "WHERE idcard = ?";     
-        $params = array($employeeID);
-        $stmt = sqlsrv_query($conn, $sql, $params );
-    }
-    
+    $sql = "SELECT locker_employee.*,buddy_locker.buddy_number AS buddy_locker,department.departmentname AS departmentname
+     FROM locker_employee
+     JOIN buddy_locker ON locker_employee.idcard = buddy_locker.owner_buddy
+     JOIN department ON locker_employee.departmentid = department.departmentno WHERE idcard = ?";
+    $params = array($employeeId)
+    $stmt = sqlsrv_query($conn, $sql,$params);
+
     if ($stmt !== false) {
         echo '<table border="1">';
         $headerPrinted = false;
