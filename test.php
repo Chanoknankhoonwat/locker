@@ -2,7 +2,7 @@
 include 'database.php';
 
 if( $conn ) {
-    $sql = "SELECT * FROM department ";
+    $sql = "SELECT * FROM buddy_locker ";
     //$sql .= "WHERE status_buddy IS NOT NULL AND status_buddy = 1 "; // แทนที่ table_name ด้วยชื่อของ table ที่ต้องการเรียก
     $stmt = sqlsrv_query($conn, $sql);
 

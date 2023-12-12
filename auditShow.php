@@ -3,27 +3,41 @@ include 'database.php';
 //$selection = $_POST['selection'];
 //$depart = $_POST['depart'];
 //$type = $_POST['type'];
+//$sex = $_POST['sex'];
 
 
 if( $conn ) {
-    $sql = "SELECT locker_employee.*,buddy_locker.buddy_number AS buddy_locker,department.departmentname AS departmentname
+    $sql = "SELECT locker_employee.*,buddy_locker.*,department.*,locker_shirt.*,out_locker.* 
         FROM locker_employee
         JOIN buddy_locker ON locker_employee.idcard = buddy_locker.owner_buddy
-        JOIN department ON locker_employee.departmentid = department.departmentno";
+        JOIN locker_shirt ON locker_employee.idcard = locker_shirt.owner_buddy
+        JOIN out_locker ON locker_employee.idcard = out_locker.owner_buddy
+        JOIN department ON locker_employee.departmentid = department.departmentno
+        WHERE locker_employee.idcard IS NOT NULL";
     $params  =array();
-    $stmt = sqlsrv_query($conn, $sql);
-   /* else{  
+    if(true){
+        $stmt = sqlsrv_query($conn, $sql);
+    }
+   else{  
+        if ($type !== NULL){
+            if ($type === 'buddy'){
+        }
+            elseif ($type === 'shirt'){
+                $sql .=" AND locker_shirt.shirt_number IS NOT NULL ";
+        }
+         // แทนที่ table_name ด้วยชื่อของ table ที่ต้องการเรียก        
+        }
         if ($depart !== NULL){
-            $sql .="WHERE departmentid = ? AND departmentid IS NOT NULL"; // แทนที่ table_name ด้วยชื่อของ table ที่ต้องการเรียก       
+            $sql .=" AND departmentid = ? "; // แทนที่ table_name ด้วยชื่อของ table ที่ต้องการเรียก       
             $params[] = $depart;
         }
 
-        if ($type !== NULL){
-            $sql .="WHERE type_locker = ? AND type_locker IS NOT NULL"; // แทนที่ table_name ด้วยชื่อของ table ที่ต้องการเรียก       
-            $params[] = $type; 
+        if ($sex !== NULL){
+            $sql .=" AND InitialT = ? "; // แทนที่ table_name ด้วยชื่อของ table ที่ต้องการเรียก       
+            $params[] = $sex; 
         }
         $stmt = sqlsrv_query($conn, $sql, $params );
-    }*/
+    }
     if ($stmt !== false) {
         echo '<table border="1">';
         $headerPrinted = false;
