@@ -7,8 +7,8 @@ if( $conn ) {
     $sql = "SELECT locker_employee.*,buddy_locker.*,department.*,locker_shirt.*,out_locker.* 
         FROM locker_employee
         JOIN buddy_locker ON locker_employee.idcard = buddy_locker.owner_buddy
-        JOIN locker_shirt ON locker_employee.idcard = locker_shirt.owner_buddy
-        JOIN out_locker ON locker_employee.idcard = out_locker.owner_buddy
+        JOIN locker_shirt ON locker_employee.idcard = locker_shirt.owner_locker
+        JOIN out_locker ON locker_employee.idcard = out_locker.owner_out
         JOIN department ON locker_employee.departmentid = department.departmentno
          WHERE locker_employee.idcard = ?";
     $params = array($employeeId)

@@ -11,7 +11,6 @@ if( $conn ) {
     LEFT JOIN locker_shirt ON locker_employee.idcard = locker_shirt.owner_locker
     LEFT JOIN locker_out ON locker_employee.idcard = locker_out.owner_out
     JOIN department ON locker_employee.departmentid = department.departmentno
-    WHERE locker_employee.idcard IS NOT NULL
         ";
     
     if(true){ 
@@ -28,20 +27,11 @@ if( $conn ) {
         echo '<table border="1">';
         $headerPrinted = false;
         echo "<table border='1'>";
-        echo "<tr><th>idcard</th><th>buddynumber</th><th>lockernumber</th><th>outnumber</th><th>InitialT</th><th>namethai</th><th>surnamethai</th>
-        <th>departmentid</th><th>departmentname</th><th>lineid</th></tr>";
+        
         while ($row = sqlsrv_fetch_array($stmt,SQLSRV_FETCH_ASSOC)) {
             echo "<tr>";
             echo "<td>" . $row['idcard'] . "</td>";
             echo "<td>" . $row['buddy_number'] . "</td>";
-            echo "<td>" . $row['shirt_number'] . "</td>";
-            echo "<td>" . $row['out_number'] . "</td>";
-            echo "<td>" . $row['InitialT'] . "</td>";
-            echo "<td>" . $row['namethai'] . "</td>";
-            echo "<td>" . $row['surnamethai'] . "</td>";
-            echo "<td>" . $row['departmentno'] . "</td>";
-            echo "<td>" . $row['departmentname'] . "</td>";
-            echo "<td>" . $row['lineid'] . "</td>";
 
             echo "</tr>";
         }

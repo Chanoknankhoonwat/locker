@@ -10,8 +10,8 @@ if( $conn ) {
     $sql = "SELECT locker_employee.*,buddy_locker.*,department.*,locker_shirt.*,out_locker.* 
         FROM locker_employee
         JOIN buddy_locker ON locker_employee.idcard = buddy_locker.owner_buddy
-        JOIN locker_shirt ON locker_employee.idcard = locker_shirt.owner_buddy
-        JOIN out_locker ON locker_employee.idcard = out_locker.owner_buddy
+        JOIN locker_shirt ON locker_employee.idcard = locker_shirt.owner_locker
+        JOIN out_locker ON locker_employee.idcard = out_locker.owner_out
         JOIN department ON locker_employee.departmentid = department.departmentno
         WHERE locker_employee.idcard IS NOT NULL";
     $params  =array();
@@ -25,15 +25,15 @@ if( $conn ) {
             elseif ($type === 'shirt'){
                 $sql .=" AND locker_shirt.shirt_number IS NOT NULL ";
         }
-         // แทนที่ table_name ด้วยชื่อของ table ที่ต้องการเรียก        
+        
         }
         if ($depart !== NULL){
-            $sql .=" AND departmentid = ? "; // แทนที่ table_name ด้วยชื่อของ table ที่ต้องการเรียก       
+            $sql .=" AND departmentid = ? ";        
             $params[] = $depart;
         }
 
         if ($sex !== NULL){
-            $sql .=" AND InitialT = ? "; // แทนที่ table_name ด้วยชื่อของ table ที่ต้องการเรียก       
+            $sql .=" AND InitialT = ? ";        
             $params[] = $sex; 
         }
         $stmt = sqlsrv_query($conn, $sql, $params );
