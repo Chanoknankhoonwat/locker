@@ -1,19 +1,15 @@
 <?php
-$serverName = "DESKTOP-8T9L9T4\\SQLEXPRESS"; //serverName\instanceName
-// Since UID and PWD are not specified in the $connectionInfo array,
-// The connection will be attempted using Windows Authentication.
-$connectionInfo = array( "Database"=>"officecenter", "UID"=>"sa", "PWD"=>"EuroInturn");
-$conn = sqlsrv_connect( $serverName, $connectionInfo);
+include 'database.php';
 //$selection = $_POST['selection']
 //$selectionID = $_POST['selectionID']
 //$employeeID = $_POST["employeeID"]
 
 if( $conn ) {
-    $sql = "SELECT locker_employee.*,buddy_locker.buddy_number AS buddy_locker,department.departmentname AS department,locker_shirt.locker_number  
+    $sql = "SELECT locker_employee.*, department.*,buddy_locker.*
         FROM locker_employee
-        JOIN buddy_locker ON locker_employee.idcard = buddy_locker.owner_buddy
         JOIN department ON locker_employee.departmentid = department.departmentno
-        JOIN locker_shirt ON lockeremployee.idcard = locker_shirt.locker_number";
+        LEFT JOIN buddy_locker ON locker_employee.idcard = buddy_locker.owner_buddy
+        ";
     
     if(true){ 
         $stmt = sqlsrv_query($conn, $sql);
@@ -29,7 +25,7 @@ if( $conn ) {
         echo '<table border="1">';
         $headerPrinted = false;
         echo "<table border='1'>";
-        echo "<tr><th>idcard</th><th>buddy_number</th><th>InitialT</th><th>namethai</th><th>surnamethai</th>
+        echo "<tr><th>idcard</th><th>buddynumber</th><th>InitialT</th><th>namethai</th><th>surnamethai</th>
         <th>departmentid</th><th>departmentname</th><th>lineid</th></tr>";
         while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
             echo "<tr>";
@@ -38,7 +34,7 @@ if( $conn ) {
             echo "<td>" . $row['InitialT'] . "</td>";
             echo "<td>" . $row['namethai'] . "</td>";
             echo "<td>" . $row['surnamethai'] . "</td>";
-            echo "<td>" . $row['departmentid'] . "</td>";
+            echo "<td>" . $row['departmentno'] . "</td>";
             echo "<td>" . $row['departmentname'] . "</td>";
             echo "<td>" . $row['lineid'] . "</td>";
 

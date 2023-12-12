@@ -1,9 +1,5 @@
 <?php
-$serverName = "DESKTOP-8T9L9T4\\SQLEXPRESS"; //serverName\instanceName
-// Since UID and PWD are not specified in the $connectionInfo array,
-// The connection will be attempted using Windows Authentication.
-$connectionInfo = array( "Database"=>"officecenter", "UID"=>"sa", "PWD"=>"EuroInturn");
-$conn = sqlsrv_connect( $serverName, $connectionInfo);
+include 'database.php';
 
 $employeeId = $_POST['employee_id'];
 

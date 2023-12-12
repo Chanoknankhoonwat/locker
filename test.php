@@ -1,14 +1,9 @@
 <?php
-$serverName = "DESKTOP-8T9L9T4\\SQLEXPRESS"; //serverName\instanceName
-
-// Since UID and PWD are not specified in the $connectionInfo array,
-// The connection will be attempted using Windows Authentication.
-$connectionInfo = array( "Database"=>"officecenter", "UID"=>"sa", "PWD"=>"EuroInturn");
-$conn = sqlsrv_connect( $serverName, $connectionInfo);
+include 'database.php';
 
 if( $conn ) {
-    $sql = "SELECT * FROM buddy_locker ";
-    $sql .= "WHERE status_buddy IS NOT NULL AND status_buddy = 1 "; // แทนที่ table_name ด้วยชื่อของ table ที่ต้องการเรียก
+    $sql = "SELECT * FROM department ";
+    //$sql .= "WHERE status_buddy IS NOT NULL AND status_buddy = 1 "; // แทนที่ table_name ด้วยชื่อของ table ที่ต้องการเรียก
     $stmt = sqlsrv_query($conn, $sql);
 
     if ($stmt !== false) {
@@ -20,7 +15,7 @@ if( $conn ) {
                 echo '<tr>';
                 foreach ($row as $key => $value) {
                     echo '<th>' . $key . '</th>';
-                }
+                }   
                 echo '</tr>';
                 $headerPrinted = true;
             }

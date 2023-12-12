@@ -1,16 +1,12 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $serverName = "DESKTOP-8T9L9T4\\SQLEXPRESS"; //serverName\instanceName
-
-    // Since UID and PWD are not specified in the $connectionInfo array,
-    // The connection will be attempted using Windows Authentication.
-    $connectionInfo = array( "Database"=>"officecenter", "UID"=>"sa", "PWD"=>"EuroInturn");
+    include 'database.php';
     $conn = sqlsrv_connect( $serverName, $connectionInfo);
     if ($conn) {
         $username = $_POST['username'];
         $password = $_POST['password'];
 
-        $sql = "SELECT * FROM [dbo].[testadmin] WHERE username = ? AND password = ?";
+        $sql = "SELECT * FROM locker_userlogin WHERE username = ? AND userpassword = ?";
         $params = array($username, $password);
         $stmt = sqlsrv_query($conn, $sql, $params);
 

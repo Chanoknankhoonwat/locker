@@ -20,4 +20,5 @@ sheet = wb['Sheet1']
 new_data = [no,locker_no,line_id_and_idcard ,check1,check2,check3 ,check4 ,check5 ,check6 ,check7,check8 ,check9 ]
 sheet.append(new_data)
 
+
 wb.save('test.xlsx')

@@ -1,9 +1,5 @@
 <?php
-$serverName = "DESKTOP-8T9L9T4\\SQLEXPRESS"; //serverName\instanceName
-$connectionInfo = array( "Database"=>"officecenter", "UID"=>"sa", "PWD"=>"EuroInturn");
-$conn = sqlsrv_connect( $serverName, $connectionInfo);
-
-$conn = sqlsrv_connect($serverName, $connectionOptions);
+include 'database.php';
 
 if ($conn) {
     $employeeId = $_POST['employee_id'];

@@ -1,11 +1,9 @@
 <?php
-$serverName = "DESKTOP-8T9L9T4\\SQLEXPRESS"; //serverName\instanceName
-$connectionInfo = array( "Database"=>"officecenter", "UID"=>"sa", "PWD"=>"EuroInturn");
-$conn = sqlsrv_connect( $serverName, $connectionInfo);
+include 'database.php';
 if ($conn) {
     $employeeIDToDelete = $_POST["username"]; // ลบข้อมูลพนักงานที่มี ID = 1
 
-    $sql = "DELETE FROM [dbo].[locker_userlogin] WHERE username = ?";
+    $sql = "DELETE FROM locker_employee WHERE idcard = ?";
     $params = array($employeeIDToDelete);
     $stmt = sqlsrv_query($conn, $sql, $params);
 

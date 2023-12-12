@@ -1,23 +1,18 @@
 <?php
-$serverName = "DESKTOP-8T9L9T4\\SQLEXPRESS"; //serverName
-// Since UID and PWD are not specified in the $connectionInfo array,
-// The connection will be attempted using Windows Authentication.
-$connectionInfo = array( "Database"=>"officecenter", "UID"=>"sa", "PWD"=>"EuroInturn");
-$conn = sqlsrv_connect( $serverName, $connectionInfo);
-$selection = $_POST['selection']
-$depart = $_POST['depart']
-$type = $_POST['type']
+include 'database.php';
+//$selection = $_POST['selection'];
+//$depart = $_POST['depart'];
+//$type = $_POST['type'];
 
 
 if( $conn ) {
     $sql = "SELECT locker_employee.*,buddy_locker.buddy_number AS buddy_locker,department.departmentname AS departmentname
         FROM locker_employee
         JOIN buddy_locker ON locker_employee.idcard = buddy_locker.owner_buddy
-        JOIN department ON locker_employee.departmentid = department.departmentno"
+        JOIN department ON locker_employee.departmentid = department.departmentno";
     $params  =array();
-    if($selection === "ALL"){
-        $stmt = sqlsrv_query($conn, $sql);}
-    else{  
+    $stmt = sqlsrv_query($conn, $sql);
+   /* else{  
         if ($depart !== NULL){
             $sql .="WHERE departmentid = ? AND departmentid IS NOT NULL"; // แทนที่ table_name ด้วยชื่อของ table ที่ต้องการเรียก       
             $params[] = $depart;
@@ -28,7 +23,7 @@ if( $conn ) {
             $params[] = $type; 
         }
         $stmt = sqlsrv_query($conn, $sql, $params );
-    }
+    }*/
     if ($stmt !== false) {
         echo '<table border="1">';
         $headerPrinted = false;
